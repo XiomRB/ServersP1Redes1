@@ -4,10 +4,10 @@ from flask_mysqldb import MySQL
 app = Flask(__name__)
 
 #configuracion conexion mysql
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '1234'
-app.config['MYSQL_DB'] = 'redes1p2'
+app.config['MYSQL_HOST'] = '192.168.137.140'
+app.config['MYSQL_USER'] = 'redes'
+app.config['MYSQL_PASSWORD'] = 'redes'
+app.config['MYSQL_DB'] = 'r1_p2'
 
 mysql = MySQL(app)
 
@@ -16,7 +16,7 @@ app.secret_key = 'mysecretkey'
 @app.route('/')
 def index():
     cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM libro')
+    cur.execute('SELECT * FROM Libro')
     data = cur.fetchall()
     return render_template('index.html', libros = data)
 
@@ -26,7 +26,7 @@ def addBook():
         nombre = request.form['nombre']
         precio = request.form['precio']
         cur = mysql.connection.cursor()
-        cur.execute('INSERT INTO libro (NOMBRE,PRECIO) VALUES (%s,%s)',(nombre,precio))
+        cur.execute('INSERT INTO Libro (NOMBRE,PRECIO) VALUES (%s,%s)',(nombre,precio))
         mysql.connection.commit()
         flash('Book added successfully!')
         return redirect(url_for('index'))
