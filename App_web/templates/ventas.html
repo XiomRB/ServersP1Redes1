@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<div class="row mt-5">
+    <div class="col-4"></div>
+    <div class="col-4">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <div class="card" style="width: 100%">
+            <div class="card-head">
+                <div class="container mt-3">
+                    <h3>Registrar Venta</h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <form action="/addVenta" method="POST">
+                    <div class="form-group">
+                        <select class="form-select" aria-label="Default select example" name="id_libro">
+                            <option selected>Seleccione Libro</option>
+                            {% for libro in libros %}
+                            <option value="{{libro.0}}">{{ libro.1 }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="form-select" aria-label="Default select example" name="id_vendedor">
+                            <option selected>Seleccione vendedor</option>
+                            {% for vendedor in vendedores %}
+                            <option value="{{vendedor.0}}">{{ vendedor.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="d-grid gap-2 mt-2">
+                        <button type="submit" class="btn btn-primary btn-block">Agregar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-4"></div>
+</div>
+<div class="row">
+    <div class="col-12 mt-3">
+        <h3>Ventas registrados</h3>
+    </div>
+    <div class="col-12 mt-2">
+        <table class="table table-bordered bg-white">
+            <thead>
+                <tr>
+                    <td>Fecha</td>
+                    <td>Libro</td>
+                    <td>Vendedor</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for venta in ventas %}
+                <tr>
+                    <td>{{ venta.0 }}</td>
+                    <td>{{ venta.1 }}</td>
+                    <td>{{ venta.2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% endblock %}
+    </div>
+</div>
