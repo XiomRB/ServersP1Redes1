@@ -27,7 +27,7 @@ app.use('/',libros_routes)
 //static files
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.listen(app.get('port'), '192.168.137.130', ()=>{
+app.listen(app.get('port'), '0.0.0.0', ()=>{
     console.log("Escuchando");
 })
 
