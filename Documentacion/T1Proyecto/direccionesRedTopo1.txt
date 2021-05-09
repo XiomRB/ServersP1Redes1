@@ -1,0 +1,21 @@
+ROUTER 3 - Direcciones de red:
+10.37.0.0/18  255.255.192.0
+10.37.64.0/18
+10.37.128.0/18
+
+ROUTER 4 - Direcciones de red:
+10.37.64.0/18
+10.37.128.0/18
+
+ROUTER 5 - Direcciones de red:
+10.37.64.0/18
+10.37.128.0/18
+10.37.192.0/18
+
+ROUTER 6 - Direcciones de red:
+10.37.0.0/18
+10.37.64.0/18
+
+ROUTER 7 - Direcciones de red:
+10.37.128.0/18
+10.37.192.0/18

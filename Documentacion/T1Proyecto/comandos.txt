@@ -1,0 +1,127 @@
+#R6 VRRP ACTIVO Y LAS IP CON SUS INTERFACES
+conf t 
+int f0/0
+ip adress 10.37.64.1 255.255.192.0
+Vrrp 1 ip 10.37.64.1
+vrrp 1 prority 150
+vrrp 1 preempt
+no shutdown
+exit
+
+int f0/1
+ip address 10.37.0.2 255.255.192.0
+vrrp 2 ip 10.37.0.2
+vrrp priority 150
+vrrp 2 preempt
+no shutdown
+exit
+
+#R3 VRRP PASICO Y LAS IP CON SUS INTERFACES
+conf t
+int f0/0
+ip address 10.37.0.1 255.255.192.0
+vrrp 1 ip 10.37.0.1
+Vrrp 1 priority 150
+no shutdown
+exit
+
+conf t
+int f1/0
+ip address 10.37.64.2 255.255.192.0
+vrrp 2 ip 10.37.64.2
+Vrrp 2 priority 150
+no shutdown
+exit
+
+conf t
+int f0/1
+ip address 10.37.128.1 255.255.192.0
+vrrp 2 ip 10.37.128.1
+Vrrp 2 priority 150
+no shutdown
+exit
+
+#R4 IP e interfaces
+conf t
+int f0/0
+ip address 10.37.64.3 255.255.192.0
+no shutdown
+exit
+
+int f0/1
+ip address 10.37.128.2 255.255.192.0
+no shutdown
+exit
+
+#R7 HSRP ACTIVO CON 2 ENLACES
+conf t
+int f0/0
+Standby 1 ip 10.37.128.4
+Standby 1 priority 150
+Standby 1 preempt
+no shutdown
+exit
+
+int f0/1
+Standby 2 ip 10.37.192.1
+Standby 2 priority 150
+Standby 2 preempt
+no shutdown
+exit
+
+
+#R5 HSRP PASIVO IP Y SUS INTERFACES
+configure terminal
+interface fastethernet 0/0
+Standby 1 ip 10.37.128.3
+Standby 1 priority 150
+no shutdown
+exit
+
+interface fastethernet 0/1
+Standby 2 ip 10.37.64.4
+Standby 2 priority 150
+no shutdown
+exit
+
+interface fastethernet 1/0
+Standby 2 ip 10.37.192.2
+Standby 2 priority 150
+no shutdown
+exit
+
+//RUTEO DINAMICO
+#R7
+conf t
+router rip
+version 2
+network 10.37.128.0
+network 10.37.192.0
+
+#R6
+conf t
+router rip
+version 2
+network 10.37.0.0
+network 10.37.64.0
+
+#R5
+conf t
+router rip
+version 2
+network 10.37.64.0
+network 10.37.128.0
+network 10.37.192.0
+
+#R4
+conf t
+version 2
+network 10.37.64.0
+network 10.37.128.0
+
+
+#R3
+version 2
+network 10.37.0.0
+network 10.37.64.0
+network 10.37.128.0
