@@ -1,7 +1,7 @@
 create table libro(
-id int auto_increment,
-nombre varchar(255),
-precio double,
+id int not null auto_increment,
+nombre varchar(255) not null,
+precio double not null,
 primary key (id)
 );
 create table vendedor(
@@ -16,8 +16,9 @@ primary key (id_vendedor)
 create table venta(
 id_venta int not null auto_increment,
 fecha timestamp not null,
-id_libro varchar(255),
+id_libro int not null,
 id_vendedor int not null,
 primary key (id_venta),
-foreign key (id_vendedor) references libro (id)
+foreign key (id_libro) references libro (id)
+foreign key (id_vendedor) references vendedor (id_vendedor)
 );
